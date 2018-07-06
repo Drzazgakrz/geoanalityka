@@ -32,7 +32,7 @@ public class RegistrationValidator {
         this.checkFlatNumber(errors,form.getAddress().getFlatNumber());
         this.checkCity(errors,form.getAddress().getCity());
         this.checkPhone(errors,form.getAddress().getPhone());
-        this.checkCaptcha(errors,form.getCaptcha());
+        //this.checkCaptcha(errors,form.getCaptcha());
         return errors;
     }
     private void checkFirstName(Map<String,String> errors, String firstName) {
@@ -90,10 +90,10 @@ public class RegistrationValidator {
         if (!matching("(^[0-9]{9,11}$)",phone))
             errors.put("phone","Number telefonu ma nieprawidłowy format");
     }
-    private void checkCaptcha(Map<String,String> errors, String captcha){
+    /*private void checkCaptcha(Map<String,String> errors, String captcha){
         if(!captchaVerifyUtils.verify(captcha))
             errors.put("captcha","Nie przeszedłeś ochrony anty botowej");
-    }
+    }*/
 
     private Boolean matching(String pattern, String regex){
         Pattern p = Pattern.compile(pattern);

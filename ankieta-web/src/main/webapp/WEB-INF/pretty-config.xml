@@ -9,7 +9,7 @@
 	</url-mapping>
 
 	<url-mapping id="login">
-		<pattern value="/login/" />
+		<pattern value="/login" />
 		<view-id value="/faces/login.xhtml" />
 	</url-mapping>
 

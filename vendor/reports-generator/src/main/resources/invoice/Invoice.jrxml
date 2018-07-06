@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-11-02T13:38:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="595" pageHeight="842" columnWidth="511" leftMargin="42" rightMargin="42" topMargin="42" bottomMargin="42" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Invoice Data Adapter"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Base" isDefault="true" mode="Transparent" fontName="DejaVu Sans" fontSize="9"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="DejaVu Sans" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="DejaVu Sans" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="DejaVu Sans"/>
+	<style name="Row" mode="Transparent" fontName="DejaVu Sans">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="Transaction Items" uuid="c80d22c0-3521-4b84-85d9-89ef80855d60">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Invoice Data Adapter"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="logo" class="java.io.InputStream">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="invoice_number" class="java.lang.String"/>
+	<parameter name="bill_to__company_name" class="java.lang.String"/>
+	<parameter name="bill_to__company_addr1" class="java.lang.String"/>
+	<parameter name="bill_to__company_addr2" class="java.lang.String"/>
+	<parameter name="bill_to__company_contact1" class="java.lang.String"/>
+	<parameter name="bill_to__company_taxid" class="java.lang.String"/>
+	<parameter name="ship_to__company_name" class="java.lang.String"/>
+	<parameter name="ship_to__company_addr1" class="java.lang.String"/>
+	<parameter name="ship_to__company_addr2" class="java.lang.String"/>
+	<parameter name="ship_to__company_contact1" class="java.lang.String"/>
+	<parameter name="ship_to__company_taxid" class="java.lang.String"/>
+	<parameter name="date" class="java.util.Date"/>
+	<parameter name="isOryginal" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="issued_by" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Sławomir Kępa"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="ordinal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[ordinal]]></fieldDescription>
+	</field>
+	<field name="itemName" class="java.lang.String">
+		<fieldDescription><![CDATA[itemName]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Double">
+		<fieldDescription><![CDATA[amount]]></fieldDescription>
+	</field>
+	<field name="unitNetPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[unitNetPrice]]></fieldDescription>
+	</field>
+	<field name="vat" class="java.lang.Double">
+		<fieldDescription><![CDATA[vat]]></fieldDescription>
+	</field>
+	<field name="unitGrossPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[unitGrossPrice]]></fieldDescription>
+	</field>
+	<field name="totalNetPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalNetPrice]]></fieldDescription>
+	</field>
+	<field name="totalVatAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalVatAmount]]></fieldDescription>
+	</field>
+	<field name="totalGrossPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[totalGrossPrice]]></fieldDescription>
+	</field>
+	<variable name="sum_tax" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalVatAmount}]]></variableExpression>
+	</variable>
+	<variable name="sum_net_price" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalNetPrice}]]></variableExpression>
+	</variable>
+	<variable name="sum_gross_price" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalGrossPrice}]]></variableExpression>
+	</variable>
+	<variable name="grosz_in_sum_gross_price" class="java.lang.String">
+		<variableExpression><![CDATA[java.lang.String.format("%02d",(int)(Double.valueOf($V{sum_gross_price}) - ((double)Double.valueOf($V{sum_gross_price}).intValue())))]]></variableExpression>
+	</variable>
+	<group name="Gruppo1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="38">
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="16" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="83864a40-3654-4315-8e81-31384783c998">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="0.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Lp.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="16" y="0" width="190" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="ee970fe4-de02-4bcb-8cbc-0169d87cf666">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="4.5"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Nazwa towaru lub usługi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="206" y="0" width="42" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="39b0bf21-9ec8-44d6-96fd-5ae604789185"/>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Ilość]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="248" y="0" width="38" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="c63a7e0f-342c-48b9-ae97-986c2c4bda23">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="0.9"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Stawka VAT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="286" y="0" width="54" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="7a732a3a-45b7-4ed6-af24-f7049f48baf1">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.3"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cena netto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="340" y="0" width="50" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="b40c7ccb-1af6-4dff-809f-a1a5f17e161f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.2"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Wartość VAT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="390" y="0" width="59" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="7d272404-9ea8-49fc-9a9a-92e12c656f2c">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Wartość netto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="449" y="0" width="59" height="38" forecolor="#FFFFFF" backcolor="#9302ED" uuid="f3fbd915-b03e-4fbf-b3d9-88e016f3fd12">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="0">
+						<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+						<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Wartość brutto]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+				<textField>
+					<reportElement x="0" y="0" width="16" height="29" uuid="8f028290-b72b-43b5-88f3-70d7485fe69b">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="0.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="" stretchType="RelativeToBandHeight" x="16" y="0" width="190" height="29" uuid="f253ba1c-20ac-46d4-b274-4ac24ae3c039">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="4.5"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="206" y="0" width="42" height="29" uuid="ccce20d3-1244-4725-9120-6f3ff7480f06">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement stretchType="ElementGroupBottom" x="248" y="0" width="38" height="29" uuid="86e01315-d3df-4e82-8ffc-31c7315b8c9a">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="0.9"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="286" y="0" width="54" height="29" forecolor="#262626" uuid="918b4b71-5e16-4e06-aa26-518c1ad33d2a">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.3"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<leftPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<bottomPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<rightPen lineWidth="0.1" lineColor="#CFCFCF"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Razem:"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="340" y="0" width="50" height="29" forecolor="#262626" uuid="d324c650-a848-4403-be57-24687c3c61d6">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.2"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<leftPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<bottomPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<rightPen lineWidth="0.1" lineColor="#CFCFCF"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($V{sum_tax}))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="390" y="0" width="59" height="29" forecolor="#262626" uuid="5b1f102a-7455-4426-9c03-a80c6d1e2031">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<leftPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<bottomPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<rightPen lineWidth="0.1" lineColor="#CFCFCF"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($V{sum_net_price}))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="449" y="0" width="59" height="29" forecolor="#262626" uuid="18fc6884-184a-417a-9aac-a07dae8ef952">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<box padding="3">
+						<topPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<leftPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<bottomPen lineWidth="0.1" lineColor="#CFCFCF"/>
+						<rightPen lineWidth="0.1" lineColor="#CFCFCF"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($V{sum_gross_price}))]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="328" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="215" width="84" height="25" forecolor="#333333" uuid="57aed2b1-4f4e-40a3-a6ad-54dae8dd4c5a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nabywca:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="140" width="509" height="1" forecolor="#D4D4D4" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="260" y="215" width="84" height="25" forecolor="#333333" uuid="139ebe8d-25b0-411e-986c-270015400874">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Odbiorca:]]></text>
+			</staticText>
+			<image hAlign="Center">
+				<reportElement x="1" y="21" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="96" y="36" width="244" height="25" forecolor="#333333" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GIS-Expert Sp. z o.o.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="91" width="205" height="15" forecolor="#333333" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
+				<text><![CDATA[tel. 81 440 81 21]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="61" width="205" height="15" forecolor="#333333" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
+				<text><![CDATA[20-277 Lublin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="76" width="205" height="15" forecolor="#333333" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[ul. Vetterów 1]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="240" width="120" height="15" forecolor="#333333" uuid="7b99ffcb-51c3-4902-a0c4-377ad1ce90d3"/>
+				<textFieldExpression><![CDATA[$P{bill_to__company_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="255" width="120" height="15" forecolor="#333333" uuid="1eb6a3e9-194c-4d55-8a76-40dc3ec56a82"/>
+				<textFieldExpression><![CDATA[$P{bill_to__company_addr1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="ElementGroupBottom" x="1" y="270" width="120" height="15" forecolor="#333333" uuid="d4171543-b200-42c5-a091-3df7dc4ea9cc"/>
+				<textFieldExpression><![CDATA[$P{bill_to__company_addr2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="1" y="300" width="120" height="15" forecolor="#333333" uuid="ca66817a-805b-4db8-b3dd-fdf7a3d2597b">
+					<printWhenExpression><![CDATA[$P{bill_to__company_contact1} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{bill_to__company_contact1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="285" width="120" height="15" forecolor="#333333" uuid="a53f0dd1-34d3-481c-8f73-4f0098f24272">
+					<printWhenExpression><![CDATA[$P{bill_to__company_taxid} != null]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{bill_to__company_taxid}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="285" width="120" height="15" forecolor="#333333" uuid="97690a3c-3bab-492a-8d76-e059551aa639">
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{ship_to__company_taxid}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="270" width="120" height="15" forecolor="#333333" uuid="55dd5d36-cf2e-42f6-b9bb-86508ff83718">
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{ship_to__company_addr2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="300" width="120" height="15" forecolor="#333333" uuid="b418044b-ec0b-4f39-b21f-042097a454c1">
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{ship_to__company_contact1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="260" y="255" width="120" height="15" forecolor="#333333" uuid="7d28e3d7-21ae-4900-bd02-81f90942fa57">
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$P{ship_to__company_addr1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="240" width="120" height="15" forecolor="#333333" uuid="7699c9d2-ceb9-41ef-9c39-b414ce8f0a02">
+					<printWhenExpression><![CDATA[1==0]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="html">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ship_to__company_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="96" y="20" width="100" height="20" forecolor="#5C5C5C" uuid="5b0b09a2-4085-4587-896a-2ea00e9c6a2e"/>
+				<text><![CDATA[Sprzedawca:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="362" y="35" width="148" height="25" forecolor="#5E5E5E" uuid="a0d02cfb-c7b4-4c2e-bd99-e4ba60d91e79"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{isOryginal}) ? "ORYGINAŁ" : "KOPIA"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="ElementGroupHeight" x="-1" y="174" width="511" height="30" forecolor="#282828" uuid="03ece4d3-8111-4116-bd1d-96fdf68ef51c"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Faktura VAT nr " + $P{invoice_number} + " z dnia " + new java.text.SimpleDateFormat("dd.MM.yyyy", new java.util.Locale.Builder().setLanguage("pl").build()).format($P{date})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="19"/>
+	</columnHeader>
+	<detail>
+		<band height="19">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+			<textField>
+				<reportElement stretchType="ElementGroupBottom" mode="Opaque" x="0" y="0" width="16" height="19" forecolor="#3D3D3D" uuid="e759456e-4b84-4911-8ea7-69cdbee4eec5">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="0.4"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ordinal} + "."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" stretchType="RelativeToBandHeight" mode="Opaque" x="16" y="0" width="190" height="19" forecolor="#3D3D3D" uuid="45f15127-b0a3-4e67-bbcc-b8b504155535">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="4.5"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="206" y="0" width="42" height="19" forecolor="#3D3D3D" uuid="58d761d6-8c35-4c1c-9550-583b3e0308bf"/>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{amount}.intValue()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="248" y="0" width="38" height="19" forecolor="#3D3D3D" uuid="f70d973e-ac8c-43b1-900e-c1f9f01ea9c9">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="0.9"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[(int) ($F{vat} * 100) + "%"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="286" y="0" width="54" height="19" forecolor="#3D3D3D" uuid="70b18871-2831-4c4b-9c11-52fc530f180c">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.3"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($F{unitNetPrice}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="340" y="0" width="50" height="19" forecolor="#3D3D3D" uuid="5febaf31-53da-45ce-a90b-034fe731cc12">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.2"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($F{totalVatAmount}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="390" y="0" width="59" height="19" forecolor="#3D3D3D" uuid="d7cbaf3d-3148-4985-bd33-47802b5adac0">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($F{totalNetPrice}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="449" y="0" width="59" height="19" forecolor="#3D3D3D" uuid="4ef3c83d-de0b-4475-a176-dee77ac0f0b1">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.4"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<leftPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<bottomPen lineWidth="0.1" lineColor="#D1D1D1"/>
+					<rightPen lineWidth="0.1" lineColor="#D1D1D1"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($F{totalGrossPrice}))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="62">
+			<textField>
+				<reportElement x="-1" y="11" width="231" height="30" forecolor="#333333" uuid="44576820-8b49-46df-92f0-28b550d98a07"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Do zapłaty: " + new java.text.DecimalFormat("#,##0.00 zł").format(Double.valueOf($V{sum_gross_price}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="33" width="440" height="14" forecolor="#333333" uuid="1d762d56-1a3c-4acf-9aed-1ce8976edd5f"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Słownie: " + (pl.gisexpert.util.PLCurrencyToWords.convert(Double.valueOf($V{sum_gross_price}).intValue())) + "PLN "+ $V{grosz_in_sum_gross_price} +"/100"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="48" width="148" height="14" uuid="028a4f94-8d0c-44bd-8491-14f8298b5bd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Wystawił: " + $P{issued_by}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>
