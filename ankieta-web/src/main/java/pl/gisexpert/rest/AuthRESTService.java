@@ -253,7 +253,8 @@ public class AuthRESTService {
 		formatter.applyPattern(i18n.getString("account.confirm.emailtext"));
 		String url = request.getRequestURL().toString();
 		String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
-		String confirmAccountURL = baseURL + "/rest/auth/confirm?confirmationCode=" + confirmationCode;
+		String confirmAccountURL = "<a href = "+baseURL + "/rest/auth/confirm?confirmationCode=" + confirmationCode+
+				"> Potwierdzenie </a>";
 		Object[] params = { confirmAccountURL };
 		String emailText = formatter.format(params);
 

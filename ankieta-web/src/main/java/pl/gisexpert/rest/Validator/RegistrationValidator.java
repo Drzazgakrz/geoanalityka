@@ -1,5 +1,6 @@
 package pl.gisexpert.rest.Validator;
 
+import org.slf4j.Logger;
 import pl.gisexpert.cms.data.AccountRepository;
 import pl.gisexpert.rest.reCaptcha.CaptchaVerifyUtils;
 import pl.gisexpert.rest.model.RegisterForm;
@@ -19,23 +20,30 @@ public class RegistrationValidator {
     @Inject
     private CaptchaVerifyUtils captchaVerifyUtils;
 
+    @Inject
+    private Logger log;
+
     public Map<String,String> validate(RegisterForm form){
         Map<String,String> errors = new HashMap<>();
-        this.checkFirstName(errors,form.getFirstname());
-        this.checkLastname(errors,form.getLastname());
-        this.checkMail(errors,form.getUsername());
-        this.checkPassword(errors,form.getPassword(),form.getConfirmPassword());
-        this.checkStreet(errors,form.getAddress().getStreet());
-        this.checkBuildingNumber(errors,form.getAddress().getBuildingNumber());
-        this.checkZipCode(errors,form.getAddress().getZipCode());
-        if(!form.getAddress().getFlatNumber().equals(""))
-        this.checkFlatNumber(errors,form.getAddress().getFlatNumber());
-        this.checkCity(errors,form.getAddress().getCity());
-        this.checkPhone(errors,form.getAddress().getPhone());
-        //this.checkCaptcha(errors,form.getCaptcha());
+        try {
+            this.checkFirstName(errors, form.getFirstname());
+            this.checkLastname(errors, form.getLastname());
+            this.checkMail(errors, form.getUsername());
+            this.checkPassword(errors, form.getPassword(), form.getConfirmPassword());
+            this.checkStreet(errors, form.getAddress().getStreet());
+            this.checkBuildingNumber(errors, form.getAddress().getBuildingNumber());
+            this.checkZipCode(errors, form.getAddress().getZipCode());
+            if (!form.getAddress().getFlatNumber().equals(""))
+                this.checkFlatNumber(errors, form.getAddress().getFlatNumber());
+            this.checkCity(errors, form.getAddress().getCity());
+            this.checkPhone(errors, form.getAddress().getPhone());
+        }catch (Exception e){
+            errors.put("Błąd","Błąd danych");
+        }
         return errors;
     }
     private void checkFirstName(Map<String,String> errors, String firstName) {
+        log.info(firstName);
         if (!matching("(^[A-Z ÀÁÂÃÄÅ ĄŻŹ ÒÓÔÕÖØ Ł Ć ĘŚ Ń ÈÉÊË Ç ÌÍÎÏ ÙÚÛÜ Ñ ]{1})([a-zàáâãäåąźżòóÓłćęśńôõöøèéêëçìíîïùúûüÿñ]{2,29}$)", firstName))
         errors.put("firstname","Imię musi zaczynać się z wielkiej litery i mieć co najmniej 3 znaki");
 
@@ -46,6 +54,7 @@ public class RegistrationValidator {
     }
 
     private void checkMail(Map<String,String> errors, String email){
+        log.info(email);
         if (!matching("(^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.+[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@+(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$)",email)){
             errors.put("username","Email ma nieprawidłowy format");
         }
@@ -90,11 +99,6 @@ public class RegistrationValidator {
         if (!matching("(^[0-9]{9,11}$)",phone))
             errors.put("phone","Number telefonu ma nieprawidłowy format");
     }
-    /*private void checkCaptcha(Map<String,String> errors, String captcha){
-        if(!captchaVerifyUtils.verify(captcha))
-            errors.put("captcha","Nie przeszedłeś ochrony anty botowej");
-    }*/
-
     private Boolean matching(String pattern, String regex){
         Pattern p = Pattern.compile(pattern);
         Matcher match = p.matcher(regex);
