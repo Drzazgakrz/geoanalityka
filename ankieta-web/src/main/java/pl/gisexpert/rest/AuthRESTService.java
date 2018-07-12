@@ -181,11 +181,14 @@ public class AuthRESTService {
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
+            String arcGisToken = this.getAccessToMapForUsers();
             GetTokenResponse getTokenStatus =
                     new GetTokenResponse(konto.getFirstName(),
                             konto.getLastName(),
                             accessToken.getToken(),
-                            date, Response.Status.OK,
+                            date,
+                            arcGisToken,
+                            Response.Status.OK,
                             "Successfully generated token");
 
             loginAttempt.setSuccessful(true);
@@ -350,19 +353,21 @@ public class AuthRESTService {
         accessToken.setExpires(date);
         accessToken.setAccount(account);
         accessToken = accessTokenRepository.create(accessToken, true);
-
+        String arcGisToken = this.getAccessToMapForUsers();
         GetTokenResponse getTokenStatus =
                 new GetTokenResponse(account.getFirstName(),
                         account.getLastName(),
                         accessToken.getToken(),
-                        date, Response.Status.OK,
+                        date,
+                        arcGisToken,
+                        Response.Status.OK,
                         "Successfully generated token");
 
         loginAttempt.setSuccessful(true);
         account.setLastLoginDate(new Date());
         accountRepository.edit(account);
         loginAttemptRepository.create(loginAttempt);
-        this.getAccessToMapForUsers();
+
         return Response.status(Response.Status.OK).entity(getTokenStatus).build();
 
     }
@@ -576,40 +581,10 @@ public class AuthRESTService {
     @Path("/getAnonymousAccess")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccessToMapForGuests(@Context HttpServletRequest request) {
-        /*JSONObject requestData = new JSONObject();
-        requestData.put("client_id", "cCm4VuqLeIBtwBBc");
-        requestData.put("client_secret", "95dc23f5e40e4ca9a8d2f61aed80c1c3");
-        requestData.put("grant_type", "client_credentials");
-        requestData.put("f","json");
-        JSONObject mainJSON = new JSONObject();
-        mainJSON.put("json", true);
-        mainJSON.put("form",requestData);*/
+
         try {
-            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
-            String url = "https://www.arcgis.com/sharing/oauth2/token";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(data);
-
-            wr.flush();
-            wr.close();
-            int responseCode = con.getResponseCode();
-            log.info("\nSending 'POST' request to URL : " + url);
-            log.info("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            response.toString();
+            String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
+            String response = sendRequest(data).toString();
             return Response.status(Status.OK).entity(response).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -618,7 +593,44 @@ public class AuthRESTService {
     }
 
     public String getAccessToMapForUsers() {
+        try {
+            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
+            StringBuffer response = sendRequest(data);
+            JSONObject json;
+            if (response!=null) {
+                log.info(response.toString());
+                json = new JSONObject(response.toString());
+                return json.getString("access_token");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
 
+        }
+        return null;
+    }
+    private StringBuffer sendRequest(String data) throws Exception{
+        String url = "https://www.arcgis.com/sharing/oauth2/token";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(data);
+        wr.flush();
+        wr.close();
+        int responseCode = con.getResponseCode();
+        if(responseCode == 200){
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            return response;
+        }
         return null;
     }
 }
