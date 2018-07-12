@@ -576,25 +576,45 @@ public class AuthRESTService {
     @Path("/getAnonymousAccess")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccessToMapForGuests(@Context HttpServletRequest request) {
-        JSONObject requestData = new JSONObject();
+        /*JSONObject requestData = new JSONObject();
         requestData.put("client_id", "cCm4VuqLeIBtwBBc");
         requestData.put("client_secret", "95dc23f5e40e4ca9a8d2f61aed80c1c3");
         requestData.put("grant_type", "client_credentials");
         requestData.put("f","json");
         JSONObject mainJSON = new JSONObject();
         mainJSON.put("json", true);
-        mainJSON.put("form",requestData);
+        mainJSON.put("form",requestData);*/
         try {
+            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
             String url = "https://www.arcgis.com/sharing/oauth2/token";
             URL obj = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(data);
+
+            wr.flush();
+            wr.close();
+            int responseCode = con.getResponseCode();
+            log.info("\nSending 'POST' request to URL : " + url);
+            log.info("Response Code : " + responseCode);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            response.toString();
+            return Response.status(Status.OK).entity(response).build();
         } catch (Exception e) {
-            log.info("Błąd połączenia z serwerem ArcGis");
+            e.printStackTrace();
             return Response.status(Status.BAD_GATEWAY).build();
         }
-
     }
 
     public String getAccessToMapForUsers() {
