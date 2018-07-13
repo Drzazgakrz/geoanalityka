@@ -181,13 +181,11 @@ public class AuthRESTService {
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
-            String arcGisToken = this.getAccessToMapForUsers();
             GetTokenResponse getTokenStatus =
                     new GetTokenResponse(konto.getFirstName(),
                             konto.getLastName(),
                             accessToken.getToken(),
                             date,
-                            arcGisToken,
                             Response.Status.OK,
                             "Successfully generated token");
 
@@ -353,13 +351,11 @@ public class AuthRESTService {
         accessToken.setExpires(date);
         accessToken.setAccount(account);
         accessToken = accessTokenRepository.create(accessToken, true);
-        String arcGisToken = this.getAccessToMapForUsers();
         GetTokenResponse getTokenStatus =
                 new GetTokenResponse(account.getFirstName(),
                         account.getLastName(),
                         accessToken.getToken(),
                         date,
-                        arcGisToken,
                         Response.Status.OK,
                         "Successfully generated token");
 
@@ -577,63 +573,5 @@ public class AuthRESTService {
                 .build();
     }
 
-    @GET
-    @Path("/getAnonymousAccess")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAccessToMapForGuests(@Context HttpServletRequest request) {
 
-        try {
-            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
-            String response = sendRequest(data).toString();
-            JSONObject object = new JSONObject(response);
-            object.put("arcGisToken",object.getString("access_token"));
-            object.remove("access_token");
-            return Response.status(Status.OK).entity(object.toString()).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(Status.BAD_GATEWAY).build();
-        }
-    }
-
-    public String getAccessToMapForUsers() {
-        try {
-            String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
-            StringBuffer response = sendRequest(data);
-            JSONObject json;
-            if (response!=null) {
-                log.info(response.toString());
-                json = new JSONObject(response.toString());
-                return json.getString("access_token");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-        return null;
-    }
-    private StringBuffer sendRequest(String data) throws Exception{
-        String url = "https://www.arcgis.com/sharing/oauth2/token";
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(data);
-        wr.flush();
-        wr.close();
-        int responseCode = con.getResponseCode();
-        if(responseCode == 200){
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            return response;
-        }
-        return null;
-    }
 }
