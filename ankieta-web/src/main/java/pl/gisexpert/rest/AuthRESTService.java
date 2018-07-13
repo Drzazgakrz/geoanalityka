@@ -583,7 +583,7 @@ public class AuthRESTService {
     public Response getAccessToMapForGuests(@Context HttpServletRequest request) {
 
         try {
-            String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
+            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
             String response = sendRequest(data).toString();
             JSONObject object = new JSONObject(response);
             object.put("arcGisToken",object.getString("access_token"));
@@ -597,7 +597,7 @@ public class AuthRESTService {
 
     public String getAccessToMapForUsers() {
         try {
-            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
+            String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
             StringBuffer response = sendRequest(data);
             JSONObject json;
             if (response!=null) {
