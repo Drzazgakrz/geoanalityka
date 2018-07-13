@@ -585,7 +585,10 @@ public class AuthRESTService {
         try {
             String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
             String response = sendRequest(data).toString();
-            return Response.status(Status.OK).entity(response).build();
+            JSONObject object = new JSONObject(response);
+            object.put("arcGisToken",object.getString("access_token"));
+            object.remove("access_token");
+            return Response.status(Status.OK).entity(object.toString()).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Status.BAD_GATEWAY).build();
