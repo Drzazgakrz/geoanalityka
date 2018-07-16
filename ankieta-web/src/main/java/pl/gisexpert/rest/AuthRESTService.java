@@ -594,7 +594,6 @@ public class AuthRESTService {
             return Response.status(Status.BAD_GATEWAY).build();
         }
     }
-//komentarz
     public String getAccessToMapForUsers() {
         try {
             String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
