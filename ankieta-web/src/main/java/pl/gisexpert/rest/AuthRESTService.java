@@ -181,13 +181,11 @@ public class AuthRESTService {
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
-            String arcGisToken = this.getAccessToMapForUsers();
             GetTokenResponse getTokenStatus =
                     new GetTokenResponse(konto.getFirstName(),
                             konto.getLastName(),
                             accessToken.getToken(),
                             date,
-                            arcGisToken,
                             Response.Status.OK,
                             "Successfully generated token");
 
@@ -353,13 +351,11 @@ public class AuthRESTService {
         accessToken.setExpires(date);
         accessToken.setAccount(account);
         accessToken = accessTokenRepository.create(accessToken, true);
-        String arcGisToken = this.getAccessToMapForUsers();
         GetTokenResponse getTokenStatus =
                 new GetTokenResponse(account.getFirstName(),
                         account.getLastName(),
                         accessToken.getToken(),
                         date,
-                        arcGisToken,
                         Response.Status.OK,
                         "Successfully generated token");
 
@@ -577,6 +573,7 @@ public class AuthRESTService {
                 .build();
     }
 
+
     @GET
     @Path("/getAnonymousAccess")
     @Produces(MediaType.APPLICATION_JSON)
@@ -607,32 +604,6 @@ public class AuthRESTService {
         } catch (Exception e) {
             e.printStackTrace();
 
-        }
-        return null;
-    }
-    private StringBuffer sendRequest(String data) throws Exception{
-        String url = "https://www.arcgis.com/sharing/oauth2/token";
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(data);
-        wr.flush();
-        wr.close();
-        int responseCode = con.getResponseCode();
-        if(responseCode == 200){
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            return response;
-        }
-        return null;
-    }
+
 }
