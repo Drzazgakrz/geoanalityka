@@ -632,7 +632,7 @@ public class AuthRESTService {
                 response.append(inputLine);
             }
             return response;
-        }
+        }//dodane
         return null;
     }
 }
