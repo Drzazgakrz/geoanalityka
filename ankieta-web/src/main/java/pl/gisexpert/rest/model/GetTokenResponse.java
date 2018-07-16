@@ -15,14 +15,12 @@ public class GetTokenResponse extends BaseResponse {
 	private String lastname;
 	private String token;
 	private Date expires;
-	private String arcGisToken;
 
-	public GetTokenResponse(String firstname, String lastname, String token, Date expires,String arcGisToken ,Status responseStatus,String message) {
+	public GetTokenResponse(String firstname, String lastname, String token, Date expires ,Status responseStatus,String message) {
 		super(responseStatus,message);
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.token = token;
 		this.expires = expires;
-		this.arcGisToken = arcGisToken;
 	}
 }

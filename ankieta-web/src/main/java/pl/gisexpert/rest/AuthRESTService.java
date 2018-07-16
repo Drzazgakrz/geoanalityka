@@ -181,13 +181,11 @@ public class AuthRESTService {
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
-            String arcGisToken = this.getAccessToMapForUsers();
             GetTokenResponse getTokenStatus =
                     new GetTokenResponse(konto.getFirstName(),
                             konto.getLastName(),
                             accessToken.getToken(),
                             date,
-                            arcGisToken,
                             Response.Status.OK,
                             "Successfully generated token");
 
@@ -353,13 +351,11 @@ public class AuthRESTService {
         accessToken.setExpires(date);
         accessToken.setAccount(account);
         accessToken = accessTokenRepository.create(accessToken, true);
-        String arcGisToken = this.getAccessToMapForUsers();
         GetTokenResponse getTokenStatus =
                 new GetTokenResponse(account.getFirstName(),
                         account.getLastName(),
                         accessToken.getToken(),
                         date,
-                        arcGisToken,
                         Response.Status.OK,
                         "Successfully generated token");
 
@@ -577,6 +573,7 @@ public class AuthRESTService {
                 .build();
     }
 
+
     @GET
     @Path("/getAnonymousAccess")
     @Produces(MediaType.APPLICATION_JSON)
@@ -632,7 +629,8 @@ public class AuthRESTService {
                 response.append(inputLine);
             }
             return response;
-        }//dodane
+        }
         return null;
     }
+
 }
