@@ -181,15 +181,15 @@ public class AuthRESTService {
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
-            String arcGisToken = this.getAccessToMapForUsers();
+            String arcGisToken = getAccessToMapForUsers();
             GetTokenResponse getTokenStatus =
                     new GetTokenResponse(konto.getFirstName(),
                             konto.getLastName(),
                             accessToken.getToken(),
                             date,
-                            arcGisToken,
                             Response.Status.OK,
-                            "Successfully generated token");
+                            "Successfully generated token",
+                            arcGisToken);
 
             loginAttempt.setSuccessful(true);
             konto.setLastLoginDate(new Date());
@@ -353,15 +353,15 @@ public class AuthRESTService {
         accessToken.setExpires(date);
         accessToken.setAccount(account);
         accessToken = accessTokenRepository.create(accessToken, true);
-        String arcGisToken = this.getAccessToMapForUsers();
+        String arcGisToken = getAccessToMapForUsers();
         GetTokenResponse getTokenStatus =
                 new GetTokenResponse(account.getFirstName(),
                         account.getLastName(),
                         accessToken.getToken(),
                         date,
-                        arcGisToken,
                         Response.Status.OK,
-                        "Successfully generated token");
+                        "Successfully generated token",
+                        arcGisToken);
 
         loginAttempt.setSuccessful(true);
         account.setLastLoginDate(new Date());
