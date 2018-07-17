@@ -177,7 +177,7 @@ public class AuthRESTService {
             cal.setTime(date);
             cal.add(Calendar.MINUTE, 240); // token will expire after 240 minutes
             date = cal.getTime();
-
+//comment
             accessToken.setExpires(date);
             accessToken = accessTokenRepository.create(accessToken, true);
             Account konto = accessToken.getAccount();
