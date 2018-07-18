@@ -13,6 +13,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<repositories>
+		<repository>
+			<id>arcgis</id>
+			<url>https://esri.bintray.com/arcgis</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>arcgis-plugin</id>
+			<url>https://esri.bintray.com/arcgis</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<parent>
 		<artifactId>ankieta</artifactId>
 		<groupId>pl.gisexpert</groupId>
@@ -34,6 +48,12 @@
 	</licenses>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.esri.arcgisruntime</groupId>
+			<artifactId>arcgis-java</artifactId>
+			<version>100.3.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -244,6 +264,16 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
+			<groupId>com.esri.arcgisruntime</groupId>
+			<artifactId>arcgis-java-maven-plugin</artifactId>
+			<version>1.0</version>
+			<configuration>
+				<version>100.3.0</version>
+			</configuration>
+		</plugin>
+			<plugin>
+
+
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
 				<configuration>
@@ -260,6 +290,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

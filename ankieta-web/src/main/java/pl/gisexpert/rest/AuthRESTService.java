@@ -632,7 +632,11 @@ public class AuthRESTService {
                 response.append(inputLine);
             }
             return response;
-        }//dodane
+        }
         return null;
+    }
+    @GET
+    public void signInToArcGis(@Context HttpServletRequest request){
+
     }
 }

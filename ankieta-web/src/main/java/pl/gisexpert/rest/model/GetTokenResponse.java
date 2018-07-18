@@ -22,6 +22,8 @@ public class GetTokenResponse extends BaseResponse {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.token = token;
+		/*StringBuilder url = new StringBuilder("https://damian-galan.maps.arcgis.com/apps/GeoForm/index.html?"+
+				"appid=0aee2b084e334f738175231019c3f82d&access_token=").append(arcGisToken).append("&expires=7200");*/
 		this.arcGisToken = arcGisToken;
 		this.expires = expires;
 
