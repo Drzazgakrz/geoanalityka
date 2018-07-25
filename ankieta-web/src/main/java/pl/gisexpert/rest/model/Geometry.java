@@ -6,7 +6,8 @@ package pl.gisexpert.rest.model;
 @lombok.NoArgsConstructor
 @lombok.AllArgsConstructor
 @lombok.ToString
-public class SubmitFormData {
-    private String token;
-    private String data;
+public class Geometry {
+    double x;
+    double y;
+    SpatialReference spatialReference;
 }
