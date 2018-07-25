@@ -15,6 +15,7 @@
 		<class>pl.gisexpert.cms.model.Role</class>
 		<class>pl.gisexpert.cms.model.ResetPassword</class>
 		<class>pl.gisexpert.cms.model.AccountConfirmation</class>
+		<class>pl.gisexpert.cms.model.UserNotifications</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>

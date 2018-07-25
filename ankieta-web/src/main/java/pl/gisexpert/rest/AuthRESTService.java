@@ -28,6 +28,7 @@ import javax.mail.MessagingException;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -41,6 +42,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.sun.org.apache.xerces.internal.util.HTTPInputSource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.crypto.hash.DefaultHashService;
@@ -100,6 +102,8 @@ public class AuthRESTService {
     @Inject
     private Logger log;
 
+    @Inject
+    NotificationRepository notificationRepository;
     private final RandomTokenGenerator resetPasswordTokenGenerator = new RandomTokenGenerator();
 
     private MessageFormat formatter = new MessageFormat("");
@@ -149,6 +153,61 @@ public class AuthRESTService {
         }
         BaseResponse errorStatus = new BaseResponse(Status.BAD_REQUEST, "Twoje konto nie jest nie potwierdzone");
         return Response.status(Response.Status.BAD_REQUEST).entity(errorStatus).build();
+    }
+
+
+    @POST
+    @Path("/registerNotification")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response registerNotification(@Context HttpServletRequest request, Notification notification){
+        AccessToken accessToken = accessTokenRepository.findByToken(notification.getToken());
+
+        if(accessToken!=null){
+            log.info(accessToken.toString());
+            Account konto = accessToken.getAccount();
+            log.info(konto.getUsername());
+            notificationRepository.create(
+                    new UserNotifications(notification.getGlobalId(),notification.getObjectId(),konto));
+            String token = UUID.randomUUID().toString();
+
+            while (accessTokenRepository.findByToken(token) != null) {
+                token = UUID.randomUUID().toString();
+            }
+
+            accessToken.setToken(token);
+
+            Date date = new Date();
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.MINUTE, 240); // token will expire after 240 minutes
+            date = cal.getTime();
+//comment
+            accessToken.setExpires(date);
+            accessTokenRepository.create(accessToken, true);
+            String arcGisToken = getAccessToMapForUsers();
+            GetTokenResponse getTokenStatus =
+                    new GetTokenResponse(konto.getFirstName(),
+                            konto.getLastName(),
+                            accessToken.getToken(),
+                            date,
+                            Response.Status.OK,
+                            "Successfully generated token",
+                            arcGisToken);
+            LoginAttempt loginAttempt = new LoginAttempt();
+            loginAttempt.setDate(new Date());
+            loginAttempt.setAccount(accessToken.getAccount());
+            loginAttempt.setIp(request.getRemoteAddr());
+            loginAttempt.setSuccessful(true);
+            konto.setLastLoginDate(new Date());
+            accountRepository.edit(konto);
+            loginAttemptRepository.create(loginAttempt);
+            return Response.status(Response.Status.OK).entity(getTokenStatus).build();
+        }
+
+        return Response.status(Response.Status.UNAUTHORIZED)
+                .entity(new BaseResponse(Response.Status.UNAUTHORIZED,"Token nie istnieje")).build();
     }
 
     @GET
@@ -279,7 +338,6 @@ public class AuthRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getToken(@Context HttpServletRequest request, GetTokenForm formData) {
-
         Account account = accountRepository.findByEmail(formData.getUsername());
 
         LoginAttempt loginAttempt = new LoginAttempt();
@@ -288,6 +346,7 @@ public class AuthRESTService {
         loginAttempt.setIp(request.getRemoteAddr());
 
         if (account == null) {
+            log.info("Konto nie istnieje");
             loginAttempt.setSuccessful(false);
             loginAttemptRepository.create(loginAttempt);
             BaseResponse rs = new BaseResponse(Response.Status.UNAUTHORIZED,
@@ -309,6 +368,7 @@ public class AuthRESTService {
         passwordService.setHashService(dhs);
 
         if (!passwordService.passwordsMatch(formData.getPassword(), account.getPassword())) {
+            log.info("hasło nie pasuje");
             loginAttempt.setSuccessful(false);
             loginAttemptRepository.create(loginAttempt);
             BaseResponse rs = new BaseResponse(Response.Status.UNAUTHORIZED,
@@ -349,6 +409,8 @@ public class AuthRESTService {
         cal.setTime(date);
         cal.add(Calendar.MINUTE, 240); // token will expire after 240 minutes
         date = cal.getTime();
+
+
 
         accessToken.setExpires(date);
         accessToken.setAccount(account);
@@ -392,24 +454,25 @@ public class AuthRESTService {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL("http://services1.arcgis.com/mQcAehnytds8jMvo/arcgis/rest/services/Bilgoraj_ankieta/FeatureServer/0/applyEdits");
+            URL url = new URL("https://services9.arcgis.com/elhqBGXPli8ZlSXL/arcgis/rest/services/Zgloszenia/FeatureServer/applyEdits?f=json");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
-
-            connection.setRequestProperty("Content-Length",
-                    Integer.toString(submitFormData.getUpdate().getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
-
-            connection.setUseCaches(false);
             connection.setDoOutput(true);
-
+            //connection.setUseCaches(false);
+            String data = submitFormData.getData();
+            log.info(submitFormData.getData());
+            connection.setRequestProperty("Content-Length",
+                    Integer.toString(data.getBytes().length));
+            connection.setRequestProperty("Content-Language", "en-US");
             DataOutputStream wr = new DataOutputStream(
                     connection.getOutputStream());
-            wr.writeBytes(submitFormData.getUpdate());
+            wr.writeBytes(data);
             wr.close();
-
+            int code = connection.getResponseCode();
+            String message = connection.getResponseMessage();
+            log.info(Integer.toString(code)+" "+message);
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
             StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
@@ -583,7 +646,7 @@ public class AuthRESTService {
     public Response getAccessToMapForGuests(@Context HttpServletRequest request) {
 
         try {
-            String data = "client_id=sGBPNhD2vAUbbiMS&client_secret=f51719b69a5f4015a8a004a5d4a200d6&grant_type=client_credentials";
+            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
             String response = sendRequest(data).toString();
             JSONObject object = new JSONObject(response);
             object.put("arcGisToken",object.getString("access_token"));
@@ -596,11 +659,10 @@ public class AuthRESTService {
     }
     public String getAccessToMapForUsers() {
         try {
-            String data = "client_id=cCm4VuqLeIBtwBBc&client_secret=95dc23f5e40e4ca9a8d2f61aed80c1c3&grant_type=client_credentials";
+            String data = "client_id=ZFrEJTD7dzTzJczV&client_secret=0e92505164664056bdc2d28ff5d351ed&grant_type=client_credentials";
             StringBuffer response = sendRequest(data);
             JSONObject json;
             if (response!=null) {
-                log.info(response.toString());
                 json = new JSONObject(response.toString());
                 return json.getString("access_token");
             }
